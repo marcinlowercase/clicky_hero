@@ -13,36 +13,36 @@
         android:id="@+id/btnLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDown"
+        app:layout_constraintEnd_toStartOf="@+id/btnDown"
+        app:layout_constraintTop_toTopOf="@+id/btnDown"
         app:srcCompat="@drawable/left" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/btnDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton4"
+        app:layout_constraintEnd_toEndOf="@+id/btnUp"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageButton4"
+        app:layout_constraintStart_toStartOf="@+id/btnUp"
         app:srcCompat="@drawable/down" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/btnRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-        app:layout_constraintStart_toEndOf="@+id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDown"
+        app:layout_constraintStart_toEndOf="@+id/btnDown"
+        app:layout_constraintTop_toTopOf="@+id/btnDown"
         app:srcCompat="@drawable/right" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/btnUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton2"
+        app:layout_constraintBottom_toTopOf="@+id/btnDown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"

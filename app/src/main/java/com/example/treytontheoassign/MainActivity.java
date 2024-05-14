@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         rvComboList.setAdapter(comboAdapter);
 
-
-
         btnButton = findViewById(R.id.btnRestart);
         btnButton.setOnClickListener(ev -> {
             for (Combo c : comboList){
