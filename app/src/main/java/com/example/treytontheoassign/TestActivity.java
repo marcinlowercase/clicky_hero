@@ -1,5 +1,6 @@
 package com.example.treytontheoassign;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -11,10 +12,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestActivity extends AppCompatActivity {
 
+    Combo currentCombo;
+    Drawable[] drawables;
     TextView tvComboName;
-    ImageView[] ivComboImage = new ImageView[8];
+    List<ImageView> ivComboImage = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,32 +33,42 @@ public class TestActivity extends AppCompatActivity {
             return insets;
         });
 
-        ivComboImage[0] = findViewById(R.id.ivTestCombo0);
-        ivComboImage[1] = findViewById(R.id.ivTestCombo1);
-        ivComboImage[2] = findViewById(R.id.ivTestCombo2);
-        ivComboImage[3] = findViewById(R.id.ivTestCombo3);
-        ivComboImage[4] = findViewById(R.id.ivTestCombo4);
-        ivComboImage[5] = findViewById(R.id.ivTestCombo5);
-        ivComboImage[6] = findViewById(R.id.ivTestCombo6);
-        ivComboImage[7] = findViewById(R.id.ivTestCombo7);
+        ivComboImage.add(findViewById(R.id.ivTestCombo0));
+        ivComboImage.add(findViewById(R.id.ivTestCombo1));
+        ivComboImage.add(findViewById(R.id.ivTestCombo2));
+        ivComboImage.add(findViewById(R.id.ivTestCombo3));
+        ivComboImage.add(findViewById(R.id.ivTestCombo4));
+        ivComboImage.add(findViewById(R.id.ivTestCombo5));
+        ivComboImage.add(findViewById(R.id.ivTestCombo6));
+        ivComboImage.add(findViewById(R.id.ivTestCombo7));
+
 
         Bundle receivedComboBundle = getIntent().getExtras();
 
-        Combo currentCombo = (Combo) receivedComboBundle.getSerializable("combo");
+        currentCombo = (Combo) receivedComboBundle.getSerializable("combo");
+//        Cannot transfer the vector drawable
+//        drawables = (Drawable[]) receivedComboBundle.getSerializable("drawables");
+
 
         tvComboName = findViewById(R.id.tvComboName);
         tvComboName.setText(currentCombo.getComboName());
 
-        updateCombo(currentCombo);
+        updateCombo(currentCombo, drawables);
 
 
         Log.d("TestActivity", "onCreate: " + currentCombo.getComboName());
 
     }
 
-    private void updateCombo(Combo currentCombo) {
+    private void updateCombo(Combo currentCombo, Drawable[] drawables) {
         for (int i = 0; i < 8; i++) {
-            ivComboImage[i].setImageDrawable(null);
+            ivComboImage.get(i).setImageDrawable(null);
+        }
+        for (int i = 0; i < currentCombo.getComboItems().size(); i++) {
+            Utils.setImageBaseOnValue(ivComboImage.get(i), currentCombo.getComboItems().get(i));
+//            ivComboImage.get(i).setImageDrawable(drawables[currentCombo.getComboItems().get(i)]);
         }
     }
+
+
 }

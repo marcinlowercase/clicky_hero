@@ -19,11 +19,9 @@ import java.util.List;
 public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHolder>{
 
     private List<Combo> comboList;
-    private Drawable[] drawables;
 
-    public ComboAdapter(List<Combo> comboList, Drawable[] drawables) {
+    public ComboAdapter(List<Combo> comboList) {
         this.comboList = comboList;
-        this.drawables = drawables;
     }
 
     @NonNull
@@ -42,7 +40,8 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
         }
 
         for (int i = 0 ; i < comboList.get(position).getComboItems().size(); i++){
-            holder.imageViewList.get(i).setImageDrawable(drawables[comboList.get(position).getComboItems().get(i)]);
+            Utils.setImageBaseOnValue(holder.imageViewList.get(i), comboList.get(position).getComboItems().get(i));
+//            holder.imageViewList.get(i).setImageDrawable(drawables[comboList.get(position).getComboItems().get(i)]);
         }
 
 

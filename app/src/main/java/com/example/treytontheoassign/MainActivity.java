@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     int attempt;
-    final Drawable[] drawables = new Drawable[4];
     List<Combo> comboList = new ArrayList<>();
 
     RecyclerView rvComboList;
@@ -52,14 +51,9 @@ public class MainActivity extends AppCompatActivity {
         comboList.add(new Combo("Pure White "));
 
 
-        drawables[0] = getDrawable(R.drawable.up);
-        drawables[1] = getDrawable(R.drawable.right);
-        drawables[2] = getDrawable(R.drawable.down);
-        drawables[3] = getDrawable(R.drawable.left);
 
 
-
-        comboAdapter = new ComboAdapter(comboList, drawables);
+        comboAdapter = new ComboAdapter(comboList);
 
 
         rvComboList.setAdapter(comboAdapter);
