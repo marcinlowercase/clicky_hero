@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TreytonTheoAssign"
         tools:targetApi="31">
+
+        <activity
+            android:name=".CongratsActivity"
+            android:exported="true">
+
+        </activity>
+
         <activity
             android:name=".TestActivity"
             android:exported="true">

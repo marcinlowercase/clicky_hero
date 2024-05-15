@@ -1,5 +1,6 @@
 package com.example.treytontheoassign;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -33,11 +34,16 @@ public class CongratsActivity extends AppCompatActivity {
         //comboCount.setText(getString(R.string.correct_combos, correctCombos));
 
         // Close button click listener
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        closeButton.setOnClickListener(ev -> {
+            Intent intent = new Intent(CongratsActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
+//        closeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 }

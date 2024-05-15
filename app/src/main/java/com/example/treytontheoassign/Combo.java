@@ -1,12 +1,15 @@
 package com.example.treytontheoassign;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Combo {
+public class Combo implements Serializable {
 
     private String comboName;
     private List<Integer> comboItems = new ArrayList<>();
+    private boolean isAttempted;
+    private boolean isCorrect;
 
     public Combo(String comboName) {
         this.comboName = comboName;
