@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Combo implements Serializable {
+    private int comboID;
 
     private String comboName;
     private List<Integer> comboItems = new ArrayList<>();
     private boolean isAttempted;
     private boolean isCorrect;
 
-    public Combo(String comboName) {
+    public Combo() {
+    }
+
+    public Combo(int comboID, String comboName) {
+        this.comboID = comboID;
         this.comboName = comboName;
 
         int numberOfItem = (int) (Math.random() * 5 ) + 4;
@@ -20,8 +25,18 @@ public class Combo implements Serializable {
             this.comboItems.add((int) (Math.random() * 4));
         }
 
+        this.isAttempted = false;
+        this.isCorrect = true;
+
     }
 
+    public boolean isAttempted(){
+        return this.isAttempted;
+    }
+
+    public boolean isCorrect(){
+        return this.isCorrect;
+    }
     public void restartCombo(){
         this.comboItems.clear();
 
@@ -30,6 +45,22 @@ public class Combo implements Serializable {
         for (int i = 0; i < numberOfItem; i++){
             this.comboItems.add((int) (Math.random() * 4));
         }
+    }
+
+    public int getComboID() {
+        return comboID;
+    }
+
+    public void setAttempted(boolean attempted) {
+        isAttempted = attempted;
+    }
+
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
+    }
+
+    public void setComboID(int comboID) {
+        this.comboID = comboID;
     }
 
     public String getComboName() {

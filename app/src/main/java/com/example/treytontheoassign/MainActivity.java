@@ -2,6 +2,7 @@ package com.example.treytontheoassign;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -19,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     int attempt;
-    List<Combo> comboList = new ArrayList<>();
+//    List<Combo> comboList = new ArrayList<>();
 
     RecyclerView rvComboList;
     Button btnButton;
     private ComboAdapter comboAdapter;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +44,30 @@ public class MainActivity extends AppCompatActivity {
         rvComboList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
 
+        dbHelper = new DBHelper(MainActivity.this);
+
+        dbHelper.addCombo(new Combo(1, "Dangerous Red"));
+        dbHelper.addCombo(new Combo(2,"Calm Blue"));
+        dbHelper.addCombo(new Combo(3,"Harmonious Green"));
+        dbHelper.addCombo(new Combo(4, "Mysterious Black"));
+        dbHelper.addCombo(new Combo(5, "Pure White"));
 
 
-        comboList.add(new Combo("Dangerous Red"));
-        comboList.add(new Combo("Calm Blue"));
-        comboList.add(new Combo("Harmonious Green"));
-        comboList.add(new Combo("Mysterious Black"));
-        comboList.add(new Combo("Pure White "));
+//        comboList.add(new Combo(1, "Dangerous Red"));
+//        comboList.add(new Combo(2,"Calm Blue"));
+//        comboList.add(new Combo(3,"Harmonious Green"));
+//        comboList.add(new Combo(4, "Mysterious Black"));
+//        comboList.add(new Combo(5, "Pure White "));
 
 
 
+        List<Combo> comboList = dbHelper.getAllCombo();
+
+
+//        dbHelper.removeCombo(comboList.get(0));
 
         comboAdapter = new ComboAdapter(comboList);
+        Log.d("MainActivity", "comboList size: " + comboList.size());
 
 
         rvComboList.setAdapter(comboAdapter);
