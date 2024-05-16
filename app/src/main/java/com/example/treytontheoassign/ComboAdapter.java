@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,10 +62,17 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
 
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), TestActivity.class);
-            intent.putExtra("combo", comboList.get(position));
-            v.getContext().startActivity(intent);
-            ((MainActivity) v.getContext()).finish();
+            if (!comboList.get(position).isAttempted()) {
+                comboList.get(position).setAttempted(true);
+                Intent intent = new Intent(v.getContext(), TestActivity.class);
+                intent.putExtra("combo", comboList.get(position));
+                v.getContext().startActivity(intent);
+                ((MainActivity) v.getContext()).finish();
+            } else {
+                Toast toast = Toast.makeText(v.getContext(), "You have already attempted this combo", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
 
         });
 
