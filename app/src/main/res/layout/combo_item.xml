@@ -4,7 +4,6 @@
     android:id="@+id/layoutComboItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/teal_700"
     android:orientation="vertical">
 
 
@@ -12,78 +11,78 @@
         android:id="@+id/tvComboName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:text="Combo Name" />
+        android:text="Combo Name"
+        android:textSize="17sp" />
 
     <LinearLayout
-        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/imageView0"
-            android:padding="2dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/left" />
 
         <ImageView
             android:id="@+id/imageView1"
-            android:padding="2dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/down" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:padding="2dp"
-
             android:layout_width="0dp"
+
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/down" />
 
         <ImageView
             android:id="@+id/imageView3"
-            android:padding="2dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/left" />
 
         <ImageView
             android:id="@+id/imageView4"
-            android:padding="2dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/right" />
 
         <ImageView
             android:id="@+id/imageView5"
-            android:padding="2dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/down" />
 
         <ImageView
             android:id="@+id/imageView6"
-            android:padding="2dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/down" />
 
         <ImageView
             android:id="@+id/imageView7"
-            android:padding="2dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:padding="2dp"
             app:srcCompat="@drawable/left" />
 
     </LinearLayout>

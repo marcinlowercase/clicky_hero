@@ -26,11 +26,8 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        // Create all required tables
 
-        // create the query for the table
-        String query = "";
-        query = "CREATE TABLE tblCombo " +
+        String query = "CREATE TABLE tblCombo " +
                 "( " +
                 "comboID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "comboName TEXT, " +
@@ -39,9 +36,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "isCorrect INTEGER" +
                 ")";
 
-//        Log.d("DBHelper", "query: " + query);
-
-        // execute the query
         db.execSQL(query);
         Log.d("DBHelper", "table created");
     }
@@ -63,8 +57,6 @@ public class DBHelper extends SQLiteOpenHelper {
         // create a reference to the database (readable)
         SQLiteDatabase db = getReadableDatabase();
 
-        // fetch all records from the table
-        // Cursor resultSet = db.query("tblStudents", null, null, null, null, null, null);
         Cursor resultSet = db.query("tblCombo", new String[]{"comboID", "comboName", "comboItems", "isAttempted", "isCorrect"}, null, null, null, null, null);
 
         // store each records to appropriate object
@@ -79,7 +71,6 @@ public class DBHelper extends SQLiteOpenHelper {
             combo.setComboID(comboID);
             combo.setComboName(comboName);
 
-            // convert combo Items
 
             List<Integer> listComboItems = new ArrayList<>();
 
@@ -89,14 +80,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
             combo.setComboItems(listComboItems);
 
-            combo.setAttempted(isAttempted == 0 ? false : true);
-            combo.setCorrect(isCorrect == 0 ? false : true);
+            combo.setAttempted(isAttempted != 0);
+            combo.setCorrect(isCorrect != 0);
 
-            // add to the collection
             combos.add(combo);
         }
 
-        // return the collection of objects
 
         return combos;
     }
@@ -113,15 +102,15 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("comboName", combo.getComboName());
         StringBuilder strComboItems = new StringBuilder();
 
-        for (Integer i : combo.getComboItems()){
+        for (Integer i : combo.getComboItems()) {
             strComboItems.append(i);
             strComboItems.append(",");
         }
         strComboItems.deleteCharAt(strComboItems.lastIndexOf(","));
 
         values.put("comboItems", strComboItems.toString());
-        values.put("isAttempted", combo.isAttempted() ? 1: 0);
-        values.put("isCorrect", combo.isCorrect() ? 1: 0);
+        values.put("isAttempted", combo.isAttempted() ? 1 : 0);
+        values.put("isCorrect", combo.isCorrect() ? 1 : 0);
 
         // store the key-value pair to the table
         return db.insert("tblCombo", null, values);
@@ -142,6 +131,44 @@ public class DBHelper extends SQLiteOpenHelper {
         // have an update query to update the record in the table
 //        String query = ""
 
+    }
+
+    public void updateComboItems() {
+
+        SQLiteDatabase dbW = getWritableDatabase();
+        SQLiteDatabase dbR = getReadableDatabase();
+
+        Cursor resultSetR = dbR.query("tblCombo", new String[]{"comboID"}, null, null, null, null, null);
+
+        int id = 1;
+
+        while (resultSetR.moveToNext()) {
+            StringBuilder strComboItems = new StringBuilder();
+            int numberOfItem = (int) (Math.random() * 5) + 4;
+
+            for (int i = 0; i < numberOfItem; i++) {
+                strComboItems.append((int) (Math.random() * 4));
+                strComboItems.append(",");
+            }
+            strComboItems.deleteCharAt(strComboItems.lastIndexOf(","));
+
+            String query = "UPDATE tblCombo SET isAttempted = 0, isCorrect = 1, comboItems = \"" + strComboItems + "\" WHERE comboID = " + id;
+
+            id++;
+            dbW.execSQL(query);
+        }
+    }
+
+    public void updateAttemptStatus(Combo currentCombo) {
+        String query = "UPDATE tblCombo SET isAttempted = " + (currentCombo.isAttempted() ? 1 : 0) + " WHERE comboID = " + currentCombo.getComboID();
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+    }
+
+    public void updateCorrectStatus(Combo currentCombo) {
+        String query = "UPDATE tblCombo SET isCorrect = " + (currentCombo.isCorrect() ? 1 : 0) + " WHERE comboID = " + currentCombo.getComboID();
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
     }
 }
 

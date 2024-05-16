@@ -21,4 +21,13 @@ public class Utils {
         }
     }
 
+
+    public static void setImageBaseOnResult(ImageView imageView, boolean result) {
+        if (result) {
+            imageView.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            imageView.setImageResource(android.R.drawable.btn_star_big_off);
+        }
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.example.treytontheoassign;
 
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -13,19 +13,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 
     int attempt;
-//    List<Combo> comboList = new ArrayList<>();
-
     RecyclerView rvComboList;
-    Button btnButton;
+    Button btnRestart;
     private ComboAdapter comboAdapter;
     private DBHelper dbHelper;
+    private List<Combo> comboList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,41 +44,85 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(MainActivity.this);
 
-        dbHelper.addCombo(new Combo(1, "Dangerous Red"));
-        dbHelper.addCombo(new Combo(2,"Calm Blue"));
-        dbHelper.addCombo(new Combo(3,"Harmonious Green"));
-        dbHelper.addCombo(new Combo(4, "Mysterious Black"));
-        dbHelper.addCombo(new Combo(5, "Pure White"));
+        Bundle bundleFromCongrats = getIntent().getExtras();
+        if (bundleFromCongrats != null) {
+            if (bundleFromCongrats.containsKey("backFromCongrats")) {
+                dbHelper.updateComboItems();
+            }
+        }
+
+        comboList = dbHelper.getAllCombo();
+
+        for (Combo c : comboList) {
+            Log.d("MainActivity", "combo: " + c.toString());
+        }
+
+        if (checkAllAttempted(comboList)) {
+            Intent intent = new Intent(MainActivity.this, CongratsActivity.class);
+            String strResult = "Correct: " +
+                    currentSuccess(comboList) +
+                    ", Incorrect: " +
+                    currentFailed(comboList);
+
+            intent.putExtra("result", strResult);
+            startActivity(intent);
+            finish();
+        }
 
 
-//        comboList.add(new Combo(1, "Dangerous Red"));
-//        comboList.add(new Combo(2,"Calm Blue"));
-//        comboList.add(new Combo(3,"Harmonious Green"));
-//        comboList.add(new Combo(4, "Mysterious Black"));
-//        comboList.add(new Combo(5, "Pure White "));
-
-
-
-        List<Combo> comboList = dbHelper.getAllCombo();
-
-
-//        dbHelper.removeCombo(comboList.get(0));
-
-        comboAdapter = new ComboAdapter(comboList);
+        comboAdapter = new ComboAdapter(this, comboList);
         Log.d("MainActivity", "comboList size: " + comboList.size());
-
 
         rvComboList.setAdapter(comboAdapter);
 
-        btnButton = findViewById(R.id.btnRestart);
-        btnButton.setOnClickListener(ev -> {
-            for (Combo c : comboList){
-                c.restartCombo();
+        btnRestart = findViewById(R.id.btnRestart);
+        btnRestart.setOnClickListener(ev -> {
+
+            dbHelper.updateComboItems();
+            comboList = dbHelper.getAllCombo();
+
+            Log.d("MainActivity", "ComboItems reset in db ");
+            for (Combo c : comboList) {
+                Log.d("MainActivity", "combo: " + c.toString());
             }
-            comboAdapter.notifyDataSetChanged();
+
+            comboAdapter = new ComboAdapter(this, comboList);
+            rvComboList.setAdapter(comboAdapter);
         });
 
 
+    }
 
+    private int currentFailed(List<Combo> comboList) {
+        int incorrect = 0;
+        for (Combo c : comboList) {
+            if (c.isAttempted()) {
+                if (!c.isCorrect()) {
+                    incorrect++;
+                }
+            }
+        }
+        return incorrect;
+    }
+
+    private int currentSuccess(List<Combo> comboList) {
+        int correct = 0;
+        for (Combo c : comboList) {
+            if (c.isAttempted()) {
+                if (c.isCorrect()) {
+                    correct++;
+                }
+            }
+        }
+        return correct;
+    }
+
+    private boolean checkAllAttempted(List<Combo> comboList) {
+        for (Combo c : comboList) {
+            if (!c.isAttempted()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

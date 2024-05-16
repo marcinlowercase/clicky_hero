@@ -1,8 +1,8 @@
 package com.example.treytontheoassign;
 
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +18,17 @@ import java.util.List;
 public class TestActivity extends AppCompatActivity {
 
     Combo currentCombo;
-    Drawable[] drawables;
     TextView tvComboName;
     List<ImageView> ivComboImage = new ArrayList<>();
+//    List<Integer> buttonResults = new ArrayList<>();
+
+    DBHelper dbHelper = new DBHelper(this);
+    int position;
+
+    ImageButton btnUp;
+    ImageButton btnDown;
+    ImageButton btnLeft;
+    ImageButton btnRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,7 @@ public class TestActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        position = 0;
 
         ivComboImage.add(findViewById(R.id.ivTestCombo0));
         ivComboImage.add(findViewById(R.id.ivTestCombo1));
@@ -45,28 +54,67 @@ public class TestActivity extends AppCompatActivity {
 
         Bundle receivedComboBundle = getIntent().getExtras();
 
+        assert receivedComboBundle != null;
         currentCombo = (Combo) receivedComboBundle.getSerializable("combo");
-//        Cannot transfer the vector drawable
-//        drawables = (Drawable[]) receivedComboBundle.getSerializable("drawables");
 
 
         tvComboName = findViewById(R.id.tvComboName);
         tvComboName.setText(currentCombo.getComboName());
 
-        updateCombo(currentCombo, drawables);
+        updateComboImage(currentCombo);
 
 
-        Log.d("TestActivity", "onCreate: " + currentCombo.getComboName());
+        // Button listener
+
+        btnUp = findViewById(R.id.btnUp);
+        btnDown = findViewById(R.id.btnDown);
+        btnLeft = findViewById(R.id.btnLeft);
+        btnRight = findViewById(R.id.btnRight);
+
+        btnUp.setOnClickListener(v -> updateResultImage(currentCombo, compareResult(0, currentCombo)));
+
+        btnRight.setOnClickListener(v -> updateResultImage(currentCombo, compareResult(1, currentCombo)));
+
+        btnDown.setOnClickListener(v -> updateResultImage(currentCombo, compareResult(2, currentCombo)));
+
+        btnLeft.setOnClickListener(v -> updateResultImage(currentCombo, compareResult(3, currentCombo)));
 
     }
 
-    private void updateCombo(Combo currentCombo, Drawable[] drawables) {
+    private void updateResultImage(Combo currentCombo, boolean currentResult) {
+        Utils.setImageBaseOnResult(ivComboImage.get(position), currentResult);
+        position++;
+        if (position == currentCombo.getComboItems().size()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
+    }
+
+    private boolean compareResult(int value, Combo currentCombo) {
+
+        boolean currentResult;
+
+        currentCombo.setAttempted(true);
+        dbHelper.updateAttemptStatus(currentCombo);
+
+        if (value == currentCombo.getComboItems().get(position)) {
+            currentResult = true;
+        } else {
+            currentResult = false;
+            currentCombo.setCorrect(false);
+            dbHelper.updateCorrectStatus(currentCombo);
+        }
+
+        return currentResult;
+    }
+
+    private void updateComboImage(Combo currentCombo) {
         for (int i = 0; i < 8; i++) {
             ivComboImage.get(i).setImageDrawable(null);
         }
         for (int i = 0; i < currentCombo.getComboItems().size(); i++) {
             Utils.setImageBaseOnValue(ivComboImage.get(i), currentCombo.getComboItems().get(i));
-//            ivComboImage.get(i).setImageDrawable(drawables[currentCombo.getComboItems().get(i)]);
         }
     }
 

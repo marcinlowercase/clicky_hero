@@ -1,8 +1,8 @@
 package com.example.treytontheoassign;
 
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +12,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHolder>{
+public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHolder> {
 
-    private List<Combo> comboList;
+    private final Context context;
+    private final List<Combo> comboList;
 
-    public ComboAdapter(List<Combo> comboList) {
+    public ComboAdapter(Context context, List<Combo> comboList) {
+        this.context = context;
         this.comboList = comboList;
     }
 
@@ -35,24 +36,36 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
     public void onBindViewHolder(@NonNull ComboViewHolder holder, int position) {
         holder.tvComboName.setText(comboList.get(position).getComboName());
 
-        for (int i = 0; i < holder.imageViewList.size(); i++){
+        for (int i = 0; i < holder.imageViewList.size(); i++) {
             holder.imageViewList.get(i).setImageDrawable(null);
         }
 
-        for (int i = 0 ; i < comboList.get(position).getComboItems().size(); i++){
+        for (int i = 0; i < comboList.get(position).getComboItems().size(); i++) {
             Utils.setImageBaseOnValue(holder.imageViewList.get(i), comboList.get(position).getComboItems().get(i));
-//            holder.imageViewList.get(i).setImageDrawable(drawables[comboList.get(position).getComboItems().get(i)]);
+
         }
 
+        if (comboList.get(position).isAttempted()) {
+            if (comboList.get(position).isCorrect()) {
+//                    holder.imageViewList.get(i).setBackgroundColor(R.color.success_green);
+                holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.success_green, context.getTheme()));
+            } else {
+//                    holder.imageViewList.get(i).setBackgroundColor(R.color.failed_red);
+                holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.failed_red, context.getTheme()));
+            }
 
-
+        } else {
+            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.teal_700, context.getTheme()));
+        }
+//        holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.red, context.getTheme()));
 
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), TestActivity.class);
             intent.putExtra("combo", comboList.get(position));
             v.getContext().startActivity(intent);
-            
+            ((MainActivity) v.getContext()).finish();
+
         });
 
     }

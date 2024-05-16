@@ -3,45 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/congrats_image"
         android:layout_width="220dp"
         android:layout_height="220dp"
-        android:src="@drawable/check_mark"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
         android:scaleType="fitCenter"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp" />
+        android:src="@drawable/check_mark" />
 
     <TextView
-        android:id="@+id/congrats_message"
+        android:id="@+id/tvResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Congratulations!"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_below="@id/congrats_image"
+        android:layout_below="@+id/congrats_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:id="@+id/combo_count"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="32dp"
         android:text="Correct: 3, Incorrect: 2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_below="@id/congrats_message"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp" />
+        android:textSize="16sp" />
 
     <Button
-        android:id="@+id/close_button"
+        android:id="@+id/btnRestartCongrats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Restart"
-        android:layout_below="@id/combo_count"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@id/tvResult"
+        android:layout_centerHorizontal="true"
+        android:text="Restart" />
 
 </RelativeLayout>

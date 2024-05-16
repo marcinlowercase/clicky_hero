@@ -10,4 +10,6 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="gray_f5">#ffF5F5F5</color>
     <color name="yellow">#FFFFFF00</color>
+    <color name="failed_red">#FFF54E4A</color>
+    <color name="success_green">#FF9bcc1e</color>
 </resources>

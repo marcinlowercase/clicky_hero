@@ -1,5 +1,7 @@
 package com.example.treytontheoassign;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +21,9 @@ public class Combo implements Serializable {
         this.comboID = comboID;
         this.comboName = comboName;
 
-        int numberOfItem = (int) (Math.random() * 5 ) + 4;
+        int numberOfItem = (int) (Math.random() * 5) + 4;
 
-        for (int i = 0; i < numberOfItem; i++){
+        for (int i = 0; i < numberOfItem; i++) {
             this.comboItems.add((int) (Math.random() * 4));
         }
 
@@ -30,21 +32,12 @@ public class Combo implements Serializable {
 
     }
 
-    public boolean isAttempted(){
+    public boolean isAttempted() {
         return this.isAttempted;
     }
 
-    public boolean isCorrect(){
+    public boolean isCorrect() {
         return this.isCorrect;
-    }
-    public void restartCombo(){
-        this.comboItems.clear();
-
-        int numberOfItem = (int) (Math.random() * 5 ) + 4;
-
-        for (int i = 0; i < numberOfItem; i++){
-            this.comboItems.add((int) (Math.random() * 4));
-        }
     }
 
     public int getComboID() {
@@ -79,11 +72,15 @@ public class Combo implements Serializable {
         this.comboItems = comboItems;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Combo{" +
-                "comboName='" + comboName + '\'' +
+                "comboID=" + comboID +
+                ", comboName='" + comboName + '\'' +
                 ", comboItems=" + comboItems +
+                ", isAttempted=" + isAttempted +
+                ", isCorrect=" + isCorrect +
                 '}';
     }
 }
