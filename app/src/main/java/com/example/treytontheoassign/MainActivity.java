@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
+
     int attempt;
+    int correct;
+
+    TextView tvCorrectCombo;
     RecyclerView rvComboList;
     Button btnRestart;
     private ComboAdapter comboAdapter;
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         attempt = 0;
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -53,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         comboList = dbHelper.getAllCombo();
 
-        for (Combo c : comboList) {
-            Log.d("MainActivity", "combo: " + c.toString());
-        }
+//        for (Combo c : comboList) {
+//            Log.d("MainActivity", "combo: " + c.toString());
+//        }
 
         if (checkAllAttempted(comboList)) {
             Intent intent = new Intent(MainActivity.this, CongratsActivity.class);
@@ -68,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        for (Combo c : comboList) {
+            if (c.isAttempted()) {
+                if (c.isCorrect()) {
+                    correct++;
+                }
+            }
+        }
+        tvCorrectCombo = findViewById(R.id.tvCorrectCombo);
+        tvCorrectCombo.setText("Correct Combos: " + correct);
 
 
         comboAdapter = new ComboAdapter(this, comboList);
@@ -88,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
             comboAdapter = new ComboAdapter(this, comboList);
             rvComboList.setAdapter(comboAdapter);
+            attempt = 0;
+            correct = 0;
+            tvCorrectCombo.setText("Correct Combos: " + correct);
         });
 
 

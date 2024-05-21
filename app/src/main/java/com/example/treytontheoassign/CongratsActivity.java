@@ -11,6 +11,7 @@ public class CongratsActivity extends AppCompatActivity {
 
 
     TextView tvResult;
+
     Button btnRestart;
 
     @Override
