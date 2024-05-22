@@ -59,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         comboList = dbHelper.getAllCombo();
 
+        if(comboList.isEmpty()){
+            dbHelper.addCombo(new Combo(1, "Maxwell"));
+            dbHelper.addCombo(new Combo(2, "is"));
+            dbHelper.addCombo(new Combo(3, "super"));
+            dbHelper.addCombo(new Combo(4, "duper"));
+            dbHelper.addCombo(new Combo(5, "cool!"));
+            comboList = dbHelper.getAllCombo();
+        }
+
 //        for (Combo c : comboList) {
 //            Log.d("MainActivity", "combo: " + c.toString());
 //        }
